@@ -71,12 +71,6 @@ class User {
             return results.json()
         .then(json => {
             let newUser = new User(json.ip)
-            allUsers.push(newUser)
-            const currentUser = (allUsers.find(user => user.name === newUser.name)) 
-            if (currentUser) {
-                console.log(currentUser)
-            } else {
-            console.log(newUser)
             fetch(baseURL + "/users", {
                 method: "POST",
                 headers: {
@@ -87,7 +81,6 @@ class User {
                     name: newUser.name
                 })
             })
-        }
         })
     })
     }
