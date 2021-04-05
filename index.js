@@ -1,41 +1,20 @@
 document.addEventListener('DOMContentLoaded', () =>{
-    fetchIp();
     const searchForm = document.getElementById("song-search");
     searchForm.addEventListener("submit", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
-
+        
         const songInput = document.getElementById('song-input-field').value
         const artistInput = document.getElementById('artist-input-field').value
         apiCall = new lastFmApi(songInput, artistInput)
         apiCall.getRelated()
     })
-
+    
+    User.createUser();
 })
 
 const baseURL = "http://localhost:3000"
-
-function fetchIp() {
-    return fetch('https://api.ipify.org/?format=json')
-    .then(results => {
-        return results.json()
-    .then(json => {
-        let newUser = new User(json.ip)
-        console.log(newUser)
-        fetch(baseURL + "/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                name: newUser.name
-            })
-        })
-    })
-    })
-}
-
+let allUsers = []
 class lastFmApi {
     constructor(name, artist) {
         this.name = name
@@ -76,7 +55,42 @@ class User {
         this.name = name
     }
 
+    static getUsers() {
+        return fetch(baseURL + '/users') 
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+           console.log(json[json.length -1])
+        })
+    }
 
+    static createUser() {
+        return fetch('https://api.ipify.org/?format=json')
+        .then(results => {
+            return results.json()
+        .then(json => {
+            let newUser = new User(json.ip)
+            allUsers.push(newUser)
+            const currentUser = (allUsers.find(user => user.name === newUser.name)) 
+            if (currentUser) {
+                console.log(currentUser)
+            } else {
+            console.log(newUser)
+            fetch(baseURL + "/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    name: newUser.name
+                })
+            })
+        }
+        })
+    })
+    }
 
 
 }
