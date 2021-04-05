@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () =>{
-    const searchForm = document.getElementById("song-search")
+    fetchIp();
+    const searchForm = document.getElementById("song-search");
     searchForm.addEventListener("submit", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
@@ -9,7 +10,31 @@ document.addEventListener('DOMContentLoaded', () =>{
         apiCall = new lastFmApi(songInput, artistInput)
         apiCall.getRelated()
     })
+
 })
+
+const baseURL = "http://localhost:3000"
+
+function fetchIp() {
+    return fetch('https://api.ipify.org/?format=json')
+    .then(results => {
+        return results.json()
+    .then(json => {
+        let newUser = new User(json.ip)
+        console.log(newUser)
+        fetch(baseURL + "/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                name: newUser.name
+            })
+        })
+    })
+    })
+}
 
 class lastFmApi {
     constructor(name, artist) {
@@ -43,4 +68,15 @@ class lastFmApi {
         li.appendChild(link)
         ul.appendChild(li)
     }
+}
+
+class User {
+
+    constructor(name) {
+        this.name = name
+    }
+
+
+
+
 }
