@@ -17,7 +17,7 @@ function getRelated(name, artist) {
     })
     .then(function(json) {
         console.log(json)
-        let randomNum = Math.floor((Math.random() * 100) + 1)
+        let randomNum = Math.floor((Math.random() * 100))
         let songObject = json.similartracks.track[`${randomNum}`]
         displayResults(songObject)
     })
@@ -26,6 +26,8 @@ function getRelated(name, artist) {
 const searchForm = document.getElementById("song-search")
 searchForm.addEventListener("submit", (e)=> {
     e.preventDefault()
+    const ul = document.getElementById('song-list')
+
     const songInput = document.getElementById('song-input-field')
     const artistInput = document.getElementById('artist-input-field')
     getRelated(songInput.value, artistInput.value)
@@ -33,12 +35,23 @@ searchForm.addEventListener("submit", (e)=> {
 
 
 function displayResults(object) {
-    const result = document.getElementById('song-list')
+    const ul = document.getElementById('song-list')
+    const link = document.createElement('a')
+    while (ul.firstChild) {
+        ul.firstChild.remove()
+    }
     li = document.createElement('li')
     li.innerText = `${object.name} - ${object.artist.name}`
-    const link = document.createElement('a')
     link.innerText = "Play Song"
     link.setAttribute('href', object.url)
     li.appendChild(link)
-    result.appendChild(li)
+    ul.appendChild(li)
+}
+
+
+class Song {
+
+
+
+
 }
