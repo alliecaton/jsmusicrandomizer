@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById("song-search");
+    const addSongButton = document.getElementById("song-add")
     searchForm.addEventListener("submit", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
@@ -9,12 +10,17 @@ document.addEventListener('DOMContentLoaded', () =>{
         apiCall = new lastFmApi(songInput, artistInput)
         apiCall.getRelated()
     })
+
+    addSongButton.addEventListener('click', (e) => {
+        e.preventDefault()
+        // const newSong = new Song()
+    })
     
-    User.createUser();
 })
 
+User.createUser();
+
 const baseURL = "http://localhost:3000"
-let allUsers = []
 class lastFmApi {
     constructor(name, artist) {
         this.name = name
@@ -85,5 +91,28 @@ class User {
     })
     }
 
+}
 
+class Song {
+    constructor(title, artist, url) {
+        this.title = title 
+        this.artist = artist
+        this.url = url
+    }
+
+    static postSong(){
+        let newSong = new Song()
+        fetch(baseURL + "/songs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                title: newSong.title,
+                artist: newSong.artist,
+                url: newSong.url
+            })
+        })
+    }
 }
