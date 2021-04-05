@@ -11,14 +11,16 @@
 
 
 function getRelated(name, artist) {
-    return fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=${artist.toLowerCase()}&track=${name.toLowerCase()}&api_key=efeaa32576655308d8b417be9812fc15&format=json`) 
+    return fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=${artist.toLowerCase().trim()}&track=${name.toLowerCase().trim()}&api_key=efeaa32576655308d8b417be9812fc15&format=json`) 
     .then(function(response) {
         return response.json();
     })
     .then(function(json) {
         console.log(json)
-        displayResults(json.similartracks)
-    }); 
+        let randomNum = Math.floor((Math.random() * 100) + 1)
+        let songObject = json.similartracks.track[`${randomNum}`]
+        displayResults(songObject)
+    })
 }
 
 const searchForm = document.getElementById("song-search")
@@ -32,10 +34,11 @@ searchForm.addEventListener("submit", (e)=> {
 
 function displayResults(object) {
     const result = document.getElementById('song-list')
-    const li = document.createElement('li')
-    li.innerText = `${object.track[0].name} - ${object.track[0].name}`
-    const button = document.createElement('button')
-    button.innerText = "Play Song"
-    
+    li = document.createElement('li')
+    li.innerText = `${object.name} - ${object.artist.name}`
+    const link = document.createElement('a')
+    link.innerText = "Play Song"
+    link.setAttribute('href', object.url)
+    li.appendChild(link)
     result.appendChild(li)
 }
