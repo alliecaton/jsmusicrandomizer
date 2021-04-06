@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Randomizer</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -24,14 +25,25 @@
         </ul>
     </div>
 
-    <form id="song-add">
-        <input id="song-input-field" type="submit" value="Add Song">
-    </form>
+    <h2>To save songs, create a new username or enter a previous one</h2>
 
-    <h2>Saved Songs</h2>
+    <form id="username">
+        <input id="name-field" type="text">
+        <input id="name-submit" type="submit" value="Submit Name">
+    </form> 
     
-    <ul id="saved-songs">
-    </ul>
+    <div class="song-add" id="song-div">
+
+        <form id="song-add">
+            <input id="song-input-field" type="submit" value="Add Song">
+        </form>
+
+        <h2 id="saved-songs-title">Saved Songs</h2>
+        
+        <ul id="saved-songs">
+        </ul>
+
+    </div>
 
 
     <script src="index.js"></script>

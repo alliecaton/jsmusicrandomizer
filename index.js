@@ -9,14 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
         apiCall.getRelated()
     })
     
-    User.createUser();
+    usernameForm.addEventListener("submit", (e)=> {
+        e.preventDefault()
+        const inputName = document.getElementById("name-field").value
+        const songDiv = document.getElementById("song-div")
+        songDiv.style.visibility = "visible"
+        let newUser = User.createUser(inputName)
+        usernameForm.style.visibility = "hidden"
+        User.getUsers()
+    })
+    
 })
 
 let totalUsers = []
 const searchForm = document.getElementById("song-search");
+const usernameForm = document.getElementById("username")
 const addSongButton = document.getElementById("song-add")
 const baseURL = "http://localhost:3000"
-let currentUserIp;
+let currentUser;
 
 // last.fm api class
 class lastFmApi {
@@ -74,21 +84,10 @@ class User {
     constructor(name) {
         this.name = name
     }
-    
+
     static currentUser() {
-        this.getUsers()
-
-        for (user of totalUsers) {
-            console.log(user)
-            return user
-        }
-        debugger;
-
-        // let currentUser = totalUsers.find(function(u) { 
-        //     u.name === currentUserIp.name
-        //     return u.id
-        // })
-        // console.log(currentUser)
+        let currUser = totalUsers.find(u => u.name === currentUser.name)
+        console.log('current user', currUser)
     }
     
     static getUsers() {
@@ -103,13 +102,8 @@ class User {
         })
     }
 
-    static createUser() {
-        return fetch('https://api.ipify.org/?format=json')
-        .then(results => {
-            return results.json()
-        .then(json => {
-            let newUser = new User(json.ip)
-            currentUserIp = newUser.name
+    static createUser(name) {
+            let newUser = new User(name)
             fetch(baseURL + "/users", {
                 method: "POST",
                 headers: {
@@ -117,19 +111,18 @@ class User {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    name: newUser.name
+                    name: name
                 })
             })
             .then(function(response) {
                 return response.json();
             })
               .then(function(data) {
-                currentUserIp = data
                 console.log('create user data', data);
+                currentUser = data
+                return data
             })
-        })
-    })
-    }
+         }
 
 }
 
