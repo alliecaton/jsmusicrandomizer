@@ -12,11 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     User.createUser();
 })
 
+let totalUsers = []
 const searchForm = document.getElementById("song-search");
 const addSongButton = document.getElementById("song-add")
 const baseURL = "http://localhost:3000"
-let currentUserIp = 
+let currentUserIp;
 
+// last.fm api class
 class lastFmApi {
     constructor(name, artist) {
         this.name = name
@@ -71,23 +73,33 @@ class User {
     
     constructor(name) {
         this.name = name
-        User.allInstances = []
-        User.allInstances.push(this)
-        
     }
-
+    
     static currentUser() {
-        const currentUser = User.allInstances.find(user => user.name === currentUserIp)
-        return currentUser
-    }
+        this.getUsers()
 
+        for (user of totalUsers) {
+            console.log(user)
+            return user
+        }
+        debugger;
+
+        // let currentUser = totalUsers.find(function(u) { 
+        //     u.name === currentUserIp.name
+        //     return u.id
+        // })
+        // console.log(currentUser)
+    }
+    
     static getUsers() {
         return fetch(baseURL + '/users') 
         .then(function(response) {
             return response.json();
         })
         .then(function(json) {
-           console.log(json[json.length -1])
+           console.log('this is the json', json)
+           totalUsers = json
+           return totalUsers
         })
     }
 
@@ -97,7 +109,7 @@ class User {
             return results.json()
         .then(json => {
             let newUser = new User(json.ip)
-            currentUserIp = json.ip
+            currentUserIp = newUser.name
             fetch(baseURL + "/users", {
                 method: "POST",
                 headers: {
@@ -112,7 +124,8 @@ class User {
                 return response.json();
             })
               .then(function(data) {
-                console.log(data);
+                currentUserIp = data
+                console.log('create user data', data);
             })
         })
     })
