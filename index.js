@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const searchForm = document.getElementById("song-search");
-    const addSongButton = document.getElementById("song-add")
     searchForm.addEventListener("submit", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
@@ -10,16 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
         apiCall = new lastFmApi(songInput, artistInput)
         apiCall.getRelated()
     })
-
-    addSongButton.addEventListener('click', (e) => {
-        e.preventDefault()
-        // const newSong = new Song()
-    })
     
+    User.createUser();
 })
 
-User.createUser();
-
+const searchForm = document.getElementById("song-search");
+const addSongButton = document.getElementById("song-add")
 const baseURL = "http://localhost:3000"
 class lastFmApi {
     constructor(name, artist) {
@@ -52,6 +46,20 @@ class lastFmApi {
         link.setAttribute('href', object.url)
         li.appendChild(link)
         ul.appendChild(li)
+
+        const handler = function(e) {
+            e.preventDefault()
+            const songTitle = object.name
+            const artistName = object.artist.name
+            const songUrl = link.getAttribute('href')
+
+            Song.createSong(songTitle, artistName, songUrl)
+            addSongButton.removeEventListener('click', handler)
+        }
+        
+        addSongButton.addEventListener('click', handler)
+        
+
     }
 }
 
@@ -100,8 +108,8 @@ class Song {
         this.url = url
     }
 
-    static postSong(){
-        let newSong = new Song()
+    static createSong(songTitle, artistName, songUrl){
+        let newSong = new Song(songTitle, artistName, songUrl)
         fetch(baseURL + "/songs", {
             method: "POST",
             headers: {
@@ -109,10 +117,21 @@ class Song {
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                title: newSong.title,
-                artist: newSong.artist,
-                url: newSong.url
+                title: `${newSong.title}`,
+                // artist: newSong.artist,
+                user_id: 20,
+                url: `${newSong.url}`
             })
         })
+        .then(function(response) {
+            return response.json();
+        })
+          .then(function(data) {
+            console.log(data);
+        })
+        //   .catch(function(error) {
+        //     alert("Something went wrong!");
+        //     console.log(error.message);
+        // })
     }
 }
