@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const searchForm = document.getElementById("song-search");
 const addSongButton = document.getElementById("song-add")
 const baseURL = "http://localhost:3000"
+let currentUserIp = 
+
 class lastFmApi {
     constructor(name, artist) {
         this.name = name
@@ -74,9 +76,8 @@ class User {
         
     }
 
-    currentUser() {
-        let allUsers = User.getUsers()
-        const currentUser = User.allInstances.find(user => user.name === this.name)
+    static currentUser() {
+        const currentUser = User.allInstances.find(user => user.name === currentUserIp)
         return currentUser
     }
 
@@ -96,7 +97,7 @@ class User {
             return results.json()
         .then(json => {
             let newUser = new User(json.ip)
-            // newUser.currentUser()
+            currentUserIp = json.ip
             fetch(baseURL + "/users", {
                 method: "POST",
                 headers: {
