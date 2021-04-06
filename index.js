@@ -54,19 +54,30 @@ class lastFmApi {
             const songUrl = link.getAttribute('href')
 
             Song.createSong(songTitle, artistName, songUrl)
+            const addedUl = document.getElementById('saved-songs')
+            
+            addedUl.append(li)
             addSongButton.removeEventListener('click', handler)
         }
-        
+
         addSongButton.addEventListener('click', handler)
-        
 
     }
 }
 
 class User {
-
+    
     constructor(name) {
         this.name = name
+        User.allInstances = []
+        User.allInstances.push(this)
+        
+    }
+
+    currentUser() {
+        let allUsers = User.getUsers()
+        const currentUser = User.allInstances.find(user => user.name === this.name)
+        return currentUser
     }
 
     static getUsers() {
@@ -85,6 +96,7 @@ class User {
             return results.json()
         .then(json => {
             let newUser = new User(json.ip)
+            // newUser.currentUser()
             fetch(baseURL + "/users", {
                 method: "POST",
                 headers: {
@@ -94,6 +106,12 @@ class User {
                 body: JSON.stringify({
                     name: newUser.name
                 })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+              .then(function(data) {
+                console.log(data);
             })
         })
     })
@@ -129,9 +147,9 @@ class Song {
           .then(function(data) {
             console.log(data);
         })
-        //   .catch(function(error) {
-        //     alert("Something went wrong!");
-        //     console.log(error.message);
-        // })
+          .catch(function(error) {
+            alert("Something went wrong!");
+            console.log(error.message);
+        })
     }
 }
