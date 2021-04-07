@@ -106,11 +106,11 @@ input {
 }
 
 .user-wrapper {
-    padding-top: 40px;
+    padding-top: 20px;
 }
 
 .user-wrapper h2 {
     margin: 0 auto;
     width: 400px;
-    padding: 10px;
+    padding-top: 40px;
 }

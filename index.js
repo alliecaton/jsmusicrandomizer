@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const theLi = document.getElementById('song-name-artist').innerText.split(' - ')
         const songTitle = theLi[0]
         const artistName = theLi[1]
-        const songUrl = document.getElementById("song-url").getAttribute('href')
+        const songUrl = ytFrame.getAttribute("src")
 
         Song.createSong(songTitle, artistName, songUrl)
         const addedUl = document.getElementById('saved-songs')
