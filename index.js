@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const songInput = document.getElementById('song-input-field').value
         const artistInput = document.getElementById('artist-input-field').value
         apiCall = new lastFmApi(songInput, artistInput)
+        addSongButton.addEventListener('click', savedSongsHandler)
         apiCall.getRelated()
     })
     
@@ -19,6 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
         User.getUsers()
         console.log('testing when this prints')
     })
+
+    const savedSongsHandler = function(e) {
+        e.preventDefault()
+        const theLi = document.getElementById('song-name-artist').innerText.split(' - ')
+        const songTitle = theLi[0]
+        const artistName = theLi[1]
+        const songUrl = document.getElementById("song-url").getAttribute('href')
+
+        Song.createSong(songTitle, artistName, songUrl)
+        const addedUl = document.getElementById('saved-songs')
+        const addedLi = document.createElement('li')
+        addedLi.innerText = `${songTitle} - ${artistName}`
+        const aTag = document.createElement('a')
+        aTag.value = "Play Song"
+        aTag.setAttribute('href', songUrl)
+        addedLi.append(aTag)
+        addedUl.append(addedLi)
+        addSongButton.removeEventListener('click', savedSongsHandler)
+    }
     
 })
 
@@ -153,32 +173,26 @@ class lastFmApi {
         }
         const li = document.createElement('li')
         li.innerText = `${object.name} - ${object.artist.name}`
+        li.setAttribute('id', 'song-name-artist')
         link.innerText = "Play Song"
         link.setAttribute('href', object.url)
+        link.setAttribute('id', 'song-url')
         li.appendChild(link)
         ul.appendChild(li)
-
-        const savedSongsHandler = function(e) {
-            e.preventDefault()
-            const songTitle = object.name
-            const artistName = object.artist.name
-            debugger;
-            const songUrl = link.getAttribute('href')
-
-            Song.createSong(songTitle, artistName, songUrl)
-            const addedUl = document.getElementById('saved-songs')
-            
-            addedUl.append(li)
-            addSongButton.removeEventListener('click', savedSongsHandler)
-        }
-
-        addSongButton.addEventListener('click', savedSongsHandler)
-
     }
 
     static displayUserSongs(object){
         if (currentUserObj) {
-            debugger;
+            for (const element of object.songs) {
+                const ul = document.getElementById('saved-songs')
+                const link = document.createElement('a')
+                const li = document.createElement('li')
+                li.innerText = `${element.title} - ${element.artist}`
+                link.innerText = "Play Song"
+                link.setAttribute('href', element.url)
+                li.appendChild(link)
+                ul.appendChild(li)
+            }
         }
     }
 
