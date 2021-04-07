@@ -215,13 +215,13 @@ class lastFmApi {
             let randomNum = Math.floor((Math.random() * 50))
             let song = json.toptracks.track[randomNum]
             lastFmApi.displayResults(song)
+            console.log(song)
+            Youtube.getVideo(song.name, song.artist.name)
         })
     }
 
     static displayResults(object) {
         const div = document.getElementById('song-list')
-        const link = document.createElement('a')
-        
         while (div.firstChild) {
             div.firstChild.remove()
         }
@@ -246,16 +246,6 @@ class lastFmApi {
         }
     }
 
-    static fetchSingleSong(song, artist) {
-        return fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=efeaa32576655308d8b417be9812fc15&artist=${artist.toLowerCase().trim()}&track=${song.toLowerCase().trim()}&format=json`) 
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(json) {
-            console.log(json)
-        })
-    }
-
 }
 
 
@@ -273,9 +263,10 @@ class Youtube {
             Youtube.displayYoutubeLink(json.items[0].id.videoId)
         })
     }
-
+    
     static displayYoutubeLink(videoId) {
-        ytFrame.style.display = "inline-block"
+        console.log("hit!")
+        ytFrame.style.display = "inline"
         ytFrame.setAttribute("src", `https://www.youtube.com/embed/${videoId}`)
     }
 }

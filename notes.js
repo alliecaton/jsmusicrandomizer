@@ -1,1 +1,5 @@
-// GET https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=1&q=believe%2Bcher&key=[YOUR_API_KEY] HTTP/1.1
+// add youtube link to the song objects as url
+
+// add youtube video (maybe as overlay) to user song list
+
+// add .catch error handling for when there are no results given 
