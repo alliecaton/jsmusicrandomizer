@@ -27,6 +27,7 @@ const usernameForm = document.getElementById("username")
 const addSongButton = document.getElementById("song-add")
 const baseURL = "http://localhost:3000"
 let currentUser;
+let currentUserObj;
 
 // last.fm api class
 class lastFmApi {
@@ -86,8 +87,8 @@ class User {
     }
 
     static currentUser() {
-        let currUser = totalUsers.find(u => u.name === currentUser.name)
-        console.log('current user', currUser)
+        currentUserObj = totalUsers.find(u => u.name === currentUser.name)
+        return currentUserObj
     }
     
     static getUsers() {
@@ -98,7 +99,17 @@ class User {
         .then(function(json) {
            console.log('this is the json', json)
            totalUsers = json
-           return totalUsers
+        })
+
+    }
+
+    static getUserById() {
+        return fetch(baseURL + `/users/${currentUserObj.id}`) 
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+           console.log('individual user data', json)
         })
     }
 
@@ -120,9 +131,9 @@ class User {
               .then(function(data) {
                 console.log('create user data', data);
                 currentUser = data
-                return data
+                User.currentUser()
             })
-         }
+        }
 
 }
 
@@ -144,7 +155,7 @@ class Song {
             body: JSON.stringify({
                 title: `${newSong.title}`,
                 // artist: newSong.artist,
-                user_id: 20,
+                user_id: currentUserObj.id,
                 url: `${newSong.url}`
             })
         })
