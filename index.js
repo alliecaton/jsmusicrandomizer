@@ -1,24 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
+    addSongButton.style.display = "none"
     searchForm.addEventListener("submit", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
         
         const songInput = document.getElementById('song-input-field').value
         const artistInput = document.getElementById('artist-input-field').value
-        apiCall = new lastFmApi(songInput, artistInput)
-        addSongButton.addEventListener('click', savedSongsHandler)
-        apiCall.getRelated()
+        
+        if (!songInput || !artistInput) {
+            alert("Enter a song name and artist")
+        } else {
+            if (currentUserObj) {
+                addSongButton.style.display = "inline"
+            }
+            apiCall = new lastFmApi(songInput, artistInput)
+            addSongButton.addEventListener('click', savedSongsHandler)
+            apiCall.getRelated()
+        }
     })
     
     usernameForm.addEventListener("submit", (e)=> {
         e.preventDefault()
-        const inputName = document.getElementById("name-field").value
-        const songDiv = document.getElementById("song-div")
-        songDiv.style.display = "inline"
-        let newUser = User.createUser(inputName)
-        usernameForm.style.display = "none"
-        User.getUsers()
-        console.log('testing when this prints')
+        const inputName = document.getElementById("name-field").value.trim()
+        if (!inputName) {
+            alert("Please enter a name")
+        } else {
+            const songDiv = document.getElementById("song-div")
+
+            songDiv.style.display = "inline"
+            let newUser = User.createUser(inputName)
+            usernameForm.style.display = "none"
+            User.getUsers()
+            console.log('testing when this prints')
+        }
     })
 
     const savedSongsHandler = function(e) {
