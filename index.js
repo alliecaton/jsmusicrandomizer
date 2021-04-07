@@ -1,5 +1,8 @@
+'use strict';
+
 document.addEventListener('DOMContentLoaded', () => {
     addSongButton.style.display = "none"
+    ytFrame.style.display = "none"
     searchForm.addEventListener("submit", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
@@ -13,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentUserObj) {
                 addSongButton.style.display = "inline"
             }
-            apiCall = new lastFmApi(songInput, artistInput)
+            let apiCall = new lastFmApi(songInput, artistInput)
             addSongButton.addEventListener('click', savedSongsHandler)
             apiCall.getRelated()
         }
@@ -63,8 +66,10 @@ const searchForm = document.getElementById("song-search");
 const usernameForm = document.getElementById("username")
 const addSongButton = document.getElementById("song-add")
 const baseURL = "http://localhost:3000"
+const ytFrame = document.getElementById('ytplayer')
 let currentUser;
 let currentUserObj;
+
 
 
 class Song {
@@ -176,10 +181,11 @@ class lastFmApi {
         })
         .then(function(json) {
             if (json.similartracks.track.length > 0) {
-            console.log(json)
-            let randomNum = Math.floor((Math.random() * 100))
-            let songObject = json.similartracks.track[randomNum]
-            lastFmApi.displayResults(songObject)
+                let randomNum = Math.floor((Math.random() * 100))
+                let songObject = json.similartracks.track[randomNum]
+                console.log('get related', songObject)
+                lastFmApi.displayResults(songObject)
+                Youtube.getVideo(songObject.name, songObject.artist.name)
             } else {
                 lastFmApi.getRelatedArtists(_this.artist)
             }
@@ -213,21 +219,16 @@ class lastFmApi {
     }
 
     static displayResults(object) {
-        const ul = document.getElementById('song-list')
+        const div = document.getElementById('song-list')
         const link = document.createElement('a')
-        while (ul.firstChild) {
-            ul.firstChild.remove()
+        
+        while (div.firstChild) {
+            div.firstChild.remove()
         }
-        const infoLi = document.createElement('li')
-        const linkLi = document.createElement('div')
-        infoLi.innerText = `${object.name} - ${object.artist.name}`
-        infoLi.setAttribute('id', 'song-name-artist')
-        link.innerText = "Play Song"
-        link.setAttribute('href', object.url)
-        link.setAttribute('id', 'song-url')
-        linkLi.appendChild(link)
-        ul.appendChild(infoLi)
-        ul.appendChild(linkLi)
+        const infoP = document.createElement('p')
+        infoP.innerText = `${object.name} - ${object.artist.name}`
+        infoP.setAttribute('id', 'song-name-artist')
+        div.appendChild(infoP)
     }
 
     static displayUserSongs(object){
@@ -255,4 +256,26 @@ class lastFmApi {
         })
     }
 
+}
+
+
+class Youtube {
+
+    static getVideo(title, artist) {
+
+        let query = title.split(" ").join("+") + "+" + artist.split(" ").join("+")
+        return fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=1&q=${query}&key=AIzaSyAPiQa-MR679fruPabI0j7UmgkciB7wrg4`) 
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            console.log(json.items[0].id.videoId)
+            Youtube.displayYoutubeLink(json.items[0].id.videoId)
+        })
+    }
+
+    static displayYoutubeLink(videoId) {
+        ytFrame.style.display = "inline-block"
+        ytFrame.setAttribute("src", `https://www.youtube.com/embed/${videoId}`)
+    }
 }

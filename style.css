@@ -5,6 +5,11 @@ body {
     font-family: monospace;
 }
 
+header {
+    margin: 0 auto;
+    max-width: 700px;
+}
+
 .wrapper-div {
     margin: 0 auto;
     max-width: 500px;
@@ -43,6 +48,29 @@ a:hover {
     color: red;
 }
 
+.title {
+    color: rgb(204, 213, 213);
+    text-align: center;
+      /* text-decoration: underline; */
+      font-family: monospace;
+      animation: colorRotate 3s linear 0s infinite;
+    }
+    
+    @keyframes colorRotate {
+      from {
+        color: #6666ff;
+      }
+      10% {
+        color: #0099ff;
+      }
+      75% {
+        color: #ff3399;
+      }
+      100% {
+        color: #6666ff;
+      }
+}
+
 /* specifics */
 
 .song-add {
@@ -60,6 +88,7 @@ a:hover {
 	/* padding: 10px 50px; */
 	text-decoration: none;
     /* margin: 5px; */
+    width: 500px
 }
 
 input {
@@ -73,4 +102,15 @@ input {
 	padding: 10px 10px;
 	text-decoration: none;
     margin: 5px;
+    width: 478px
+}
+
+.user-wrapper {
+    padding-top: 40px;
+}
+
+.user-wrapper h2 {
+    margin: 0 auto;
+    width: 400px;
+    padding: 10px;
 }
