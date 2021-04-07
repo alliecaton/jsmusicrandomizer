@@ -10,45 +10,54 @@
 <body>
 <div class="wrapper-div">
 
-    <form id="song-search">
-        <label>Song Title</label>
-        <input id="song-input-field" type="text">
-        <br>
-        <label>Artist Name</label>
-        <input id="artist-input-field" type="text">
-        <br>
-        <input type="submit" class="submit-button" value="Search">
-    </form>
+    <div class="song-search-wrapper"> 
 
-
-    <div id="result-songs">
-        <ul id="song-list">
-
-        </ul>
-    </div>
-
-    
-    <form id="username">
-        <h2>To save songs, create a new username or enter a previous one</h2>
-        <input id="name-field" type="text">
-        <input id="name-submit" class="submit-button" type="submit" value="Submit Name">
-    </form> 
-    
-    <div class="song-add" id="song-div">
-
-        <form id="song-add">
-            <input id="song-input-field" class="submit-button" type="submit" value="Add Song">
+        <form id="song-search">
+            <label>Song Title</label>
+            <input id="song-input-field" type="text">
+            <br>
+            <label>Artist Name</label>
+            <input id="artist-input-field" type="text">
+            <br>
+            <input type="submit" class="submit-button" value="Search">
         </form>
 
-        <div class="header">
-            <h2 id="saved-songs-title">
-            <img class="song-add-header" src="imgs/music-note.gif">
-            Saved Songs
-        </h2>
+
+        <div id="result-songs">
+            <ul id="song-list">
+
+            </ul>
         </div>
+
+    </div>
+
+    <!-- user block below -->
+
+    <div class="user-wrapper">
+    
+        <form id="username">
+            <h2>To save songs, create a new username or enter a previous one</h2>
+            <input id="name-field" type="text">
+            <input id="name-submit" class="submit-button" type="submit" value="Submit Name">
+        </form> 
         
-        <ul id="saved-songs">
-        </ul>
+        <div class="song-add" id="song-div">
+
+            <form id="song-add">
+                <input id="song-input-field" class="submit-button" type="submit" value="Add Song">
+            </form>
+
+            <div class="header">
+                <h2 id="saved-songs-title">
+                <img class="song-add-header" src="imgs/music-note.gif">
+                Saved Songs
+            </h2>
+            </div>
+            
+            <ul id="saved-songs">
+            </ul>
+
+        </div>
 
     </div>
 
