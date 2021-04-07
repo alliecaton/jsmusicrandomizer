@@ -62,7 +62,7 @@ class lastFmApi {
         li.appendChild(link)
         ul.appendChild(li)
 
-        const handler = function(e) {
+        const savedSongsHandler = function(e) {
             e.preventDefault()
             const songTitle = object.name
             const artistName = object.artist.name
@@ -72,12 +72,31 @@ class lastFmApi {
             const addedUl = document.getElementById('saved-songs')
             
             addedUl.append(li)
-            addSongButton.removeEventListener('click', handler)
+            addSongButton.removeEventListener('click', savedSongsHandler)
         }
 
-        addSongButton.addEventListener('click', handler)
+        addSongButton.addEventListener('click', savedSongsHandler)
 
     }
+
+    
+    // static displayUserSongs(){
+    //     if (currentUserObj) {
+    //         console.log(User.getUserById(currentUserObj.id))
+            
+    //     }
+    // }
+
+    static fetchSingleSong(song, artist) {
+        return fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=efeaa32576655308d8b417be9812fc15&artist=${artist.toLowerCase().trim()}&track=${song.toLowerCase().trim()}&format=json`) 
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            console.log(json)
+        })
+    }
+
 }
 
 class User {
@@ -99,17 +118,19 @@ class User {
         .then(function(json) {
            console.log('this is the json', json)
            totalUsers = json
+        //    Song.displayUserSongs()
         })
 
     }
 
-    static getUserById() {
+    static async getUserById() {
         return fetch(baseURL + `/users/${currentUserObj.id}`) 
         .then(function(response) {
             return response.json();
         })
         .then(function(json) {
            console.log('individual user data', json)
+           return json
         })
     }
 
@@ -154,7 +175,7 @@ class Song {
             },
             body: JSON.stringify({
                 title: `${newSong.title}`,
-                // artist: newSong.artist,
+                artist: newSong.artist,
                 user_id: currentUserObj.id,
                 url: `${newSong.url}`
             })
