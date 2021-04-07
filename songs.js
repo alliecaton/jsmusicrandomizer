@@ -15,7 +15,7 @@ class Song {
             },
             body: JSON.stringify({
                 title: `${newSong.title}`,
-                artist: newSong.artist,
+                artist: `${newSong.artist}`,
                 user_id: currentUserObj.id,
                 url: `${newSong.url}`
             })

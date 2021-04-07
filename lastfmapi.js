@@ -48,13 +48,11 @@ class lastFmApi {
 
     }
 
-    
-    // static displayUserSongs(){
-    //     if (currentUserObj) {
-    //         console.log(User.getUserById(currentUserObj.id))
-            
-    //     }
-    // }
+    static displayUserSongs(object){
+        if (currentUserObj) {
+            debugger;
+        }
+    }
 
     static fetchSingleSong(song, artist) {
         return fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=efeaa32576655308d8b417be9812fc15&artist=${artist.toLowerCase().trim()}&track=${song.toLowerCase().trim()}&format=json`) 

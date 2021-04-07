@@ -6,7 +6,7 @@ class User {
 
     static currentUser() {
         currentUserObj = totalUsers.find(u => u.name === currentUser.name)
-        return currentUserObj
+        this.getUserById(currentUserObj.id)
     }
     
     static getUsers() {
@@ -15,20 +15,19 @@ class User {
             return response.json();
         })
         .then(function(json) {
-           console.log('this is the json', json)
            totalUsers = json
-        //    Song.displayUserSongs()
         })
 
     }
 
-    static async getUserById() {
-        return fetch(baseURL + `/users/${currentUserObj.id}`) 
+    static async getUserById(id) {
+        return fetch(baseURL + "/users/" + `${id}`) 
         .then(function(response) {
             return response.json();
         })
         .then(function(json) {
            console.log('individual user data', json)
+           lastFmApi.displayUserSongs(json)
            return json
         })
     }
