@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let newUser = User.createUser(inputName)
             usernameForm.style.display = "none"
             User.getUsers()
-            console.log('testing when this prints')
         }
     })
 
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         aTag.setAttribute('href', songUrl)
         addedLi.append(aTag)
         addedUl.append(addedLi)
-        addSongButton.removeEventListener('click', savedSongsHandler)
     }
     
 })
@@ -114,7 +112,7 @@ class User {
     }
 
     static currentUser() {
-        currentUserObj = totalUsers.find(u => u.name === currentUser.name)
+        currentUserObj = totalUsers.find(u => u.name === currentUser.name);
         this.getUserById(currentUserObj.id)
     }
     
@@ -129,7 +127,7 @@ class User {
 
     }
 
-    static async getUserById(id) {
+    static getUserById(id) {
         return fetch(baseURL + "/users/" + `${id}`) 
         .then(function(response) {
             return response.json();
@@ -157,7 +155,6 @@ class User {
                 return response.json();
             })
               .then(function(data) {
-                console.log('create user data', data);
                 currentUser = data
                 User.currentUser()
             })
@@ -180,7 +177,7 @@ class lastFmApi {
             return response.json();
         })
         .then(function(json) {
-            if (json.similartracks.track.length > 0) {
+            if (json.similartracks.track.length > 0 || json.similartracks === undefined) {
                 let randomNum = Math.floor((Math.random() * 100))
                 let songObject = json.similartracks.track[randomNum]
                 console.log('get related', songObject)
@@ -189,6 +186,9 @@ class lastFmApi {
             } else {
                 lastFmApi.getRelatedArtists(_this.artist)
             }
+        })
+        .catch(function(e) {
+            alert("Looks like we can't find data for that song :(")
         })
     }
 
