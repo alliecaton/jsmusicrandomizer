@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="wrapper-div">
 
     <form id="song-search">
         <label>Song Title</label>
@@ -16,7 +17,7 @@
         <label>Artist Name</label>
         <input id="artist-input-field" type="text">
         <br>
-        <input type="submit" value="Search">
+        <input type="submit" class="submit-button" value="Search">
     </form>
 
 
@@ -30,18 +31,19 @@
     <form id="username">
         <h2>To save songs, create a new username or enter a previous one</h2>
         <input id="name-field" type="text">
-        <input id="name-submit" type="submit" value="Submit Name">
+        <input id="name-submit" class="submit-button" type="submit" value="Submit Name">
     </form> 
     
     <div class="song-add" id="song-div">
 
         <form id="song-add">
-            <input id="song-input-field" type="submit" value="Add Song">
+            <input id="song-input-field" class="submit-button" type="submit" value="Add Song">
         </form>
 
         <div class="header">
-            <h2 id="saved-songs-title">Saved Songs
+            <h2 id="saved-songs-title">
             <img class="song-add-header" src="imgs/music-note.gif">
+            Saved Songs
         </h2>
         </div>
         
@@ -55,7 +57,8 @@
     <script src="lastfmapi.js"></script>
     <script src="users.js"></script> -->
     <script src="index.js"></script>
-    
+   
+    </div>
 </body>
 
 </html>
