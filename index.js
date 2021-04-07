@@ -169,15 +169,46 @@ class lastFmApi {
     }
     
     getRelated() {
+        const _this = this
         return fetch(`https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=${this.artist.toLowerCase().trim()}&track=${this.name.toLowerCase().trim()}&api_key=efeaa32576655308d8b417be9812fc15&format=json`) 
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            if (json.similartracks.track.length > 0) {
+            console.log(json)
+            let randomNum = Math.floor((Math.random() * 100))
+            let songObject = json.similartracks.track[randomNum]
+            lastFmApi.displayResults(songObject)
+            } else {
+                lastFmApi.getRelatedArtists(_this.artist)
+            }
+        })
+    }
+
+    static getRelatedArtists(artistName) {
+        return fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artistName.toLowerCase().trim()}&api_key=efeaa32576655308d8b417be9812fc15&format=json`)
         .then(function(response) {
             return response.json();
         })
         .then(function(json) {
             console.log(json)
             let randomNum = Math.floor((Math.random() * 100))
-            let songObject = json.similartracks.track[`${randomNum}`]
-            lastFmApi.displayResults(songObject)
+            let artist = json.similarartists.artist[randomNum].name
+            lastFmApi.getArtistTopSongs(artist)
+        })
+    }
+
+    static getArtistTopSongs(artistName){
+        return fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${artistName.toLowerCase().trim()}&api_key=efeaa32576655308d8b417be9812fc15&format=json`)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            console.log(json)
+            let randomNum = Math.floor((Math.random() * 50))
+            let song = json.toptracks.track[randomNum]
+            lastFmApi.displayResults(song)
         })
     }
 
@@ -195,7 +226,6 @@ class lastFmApi {
         link.setAttribute('href', object.url)
         link.setAttribute('id', 'song-url')
         linkLi.appendChild(link)
-        // li.appendChild(link)
         ul.appendChild(infoLi)
         ul.appendChild(linkLi)
     }
