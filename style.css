@@ -1,3 +1,13 @@
+
+
+
 .song-add {
-    visibility: hidden;
+    display: none;
+}
+
+img {
+    vertical-align: bottom;
+    max-width: 10%;
+    height: auto;
+
 }

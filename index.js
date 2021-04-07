@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault()
         const inputName = document.getElementById("name-field").value
         const songDiv = document.getElementById("song-div")
-        songDiv.style.visibility = "visible"
+        songDiv.style.display = "inline"
         let newUser = User.createUser(inputName)
-        usernameForm.style.visibility = "hidden"
+        usernameForm.style.display = "none"
         User.getUsers()
         console.log('testing when this prints')
     })
@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const addedLi = document.createElement('li')
         addedLi.innerText = `${songTitle} - ${artistName}`
         const aTag = document.createElement('a')
-        aTag.value = "Play Song"
+        const img = document.createElement('img')
+        aTag.innerText = "Play Song"
+        
         aTag.setAttribute('href', songUrl)
         addedLi.append(aTag)
         addedUl.append(addedLi)
@@ -171,14 +173,17 @@ class lastFmApi {
         while (ul.firstChild) {
             ul.firstChild.remove()
         }
-        const li = document.createElement('li')
-        li.innerText = `${object.name} - ${object.artist.name}`
-        li.setAttribute('id', 'song-name-artist')
+        const infoLi = document.createElement('li')
+        const linkLi = document.createElement('div')
+        infoLi.innerText = `${object.name} - ${object.artist.name}`
+        infoLi.setAttribute('id', 'song-name-artist')
         link.innerText = "Play Song"
         link.setAttribute('href', object.url)
         link.setAttribute('id', 'song-url')
-        li.appendChild(link)
-        ul.appendChild(li)
+        linkLi.appendChild(link)
+        // li.appendChild(link)
+        ul.appendChild(infoLi)
+        ul.appendChild(linkLi)
     }
 
     static displayUserSongs(object){
