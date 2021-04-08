@@ -1,13 +1,14 @@
+'use strict';
 class User {
     
     constructor(name) {
         this.name = name
     }
 
-    static currentUser() {
-        currentUserObj = totalUsers.find(u => u.name === currentUser.name)
-        this.getUserById(currentUserObj.id)
-    }
+    // static currentUser() {
+    //     currentUserObj = totalUsers.find(u => u.name === currentUser.name);
+    //     this.getUserById(currentUserObj.id)
+    // }
     
     static getUsers() {
         return fetch(baseURL + '/users') 
@@ -16,11 +17,17 @@ class User {
         })
         .then(function(json) {
            totalUsers = json
+           currentUserObj = totalUsers.find(u => u.name === currentUser.name);
+           User.getUserById(currentUserObj.id)
+        //    return totalUsers
         })
+        // .catch(function() {
+        //     alert("Something went wrong. Reload and try again!")
+        // })
 
     }
 
-    static async getUserById(id) {
+    static getUserById(id) {
         return fetch(baseURL + "/users/" + `${id}`) 
         .then(function(response) {
             return response.json();
@@ -29,6 +36,9 @@ class User {
            console.log('individual user data', json)
            lastFmApi.displayUserSongs(json)
            return json
+        })
+        .catch(function() {
+            alert("Something went wrong. Reload and try again!")
         })
     }
 
@@ -48,9 +58,11 @@ class User {
                 return response.json();
             })
               .then(function(data) {
-                console.log('create user data', data);
                 currentUser = data
-                User.currentUser()
+                User.getUsers()
+            })
+            .catch(function() {
+                alert("Something went wrong. Reload and try again!")
             })
         }
 

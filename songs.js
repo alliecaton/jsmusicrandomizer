@@ -1,3 +1,4 @@
+'use strict';
 class Song {
     constructor(title, artist, url) {
         this.title = title 
