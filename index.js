@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     addSongButton.style.display = "none"
     ytFrame.style.display = "none"
-    searchForm.addEventListener("submit", (e)=> {
+    searchFormButton.addEventListener("click", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
         
@@ -47,11 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         Song.createSong(songTitle, artistName, songUrl)
         const addedUl = document.getElementById('saved-songs')
         const addedLi = document.createElement('li')
+        addedLi.setAttribute("class", "new-song-li")
         addedLi.innerText = `${songTitle} - ${artistName}`
         const aTag = document.createElement('a')
         const img = document.createElement('img')
-        aTag.innerText = "Play Song"
-        
+        img.setAttribute("src", "imgs/youtube.png")
+        img.setAttribute("class", "youtube-image")
+        aTag.append(img)
         aTag.setAttribute('href', songUrl)
         addedLi.append(aTag)
         addedUl.append(addedLi)
@@ -67,6 +69,7 @@ const baseURL = "http://localhost:3000"
 const ytFrame = document.getElementById('ytplayer')
 let currentUser;
 let currentUserObj;
+const searchFormButton = document.getElementById('search-button')
 
 
 
@@ -240,8 +243,12 @@ class lastFmApi {
                 const ul = document.getElementById('saved-songs')
                 const link = document.createElement('a')
                 const li = document.createElement('li')
+                li.setAttribute("class", "new-song-li")
                 li.innerText = `${element.title} - ${element.artist}`
-                link.innerText = "Play Song"
+                const img = document.createElement('img')
+                img.setAttribute("src", "imgs/youtube.png")
+                img.setAttribute("class", "youtube-image")
+                link.append(img)
                 link.setAttribute('href', element.url)
                 li.appendChild(link)
                 ul.appendChild(li)

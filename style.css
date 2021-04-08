@@ -11,8 +11,14 @@ header {
 }
 
 .wrapper-div {
-    margin: 0 auto;
-    max-width: 500px;
+  margin: 0 auto;
+  max-width: 500px;
+
+}
+
+iframe {
+  border: 2px;
+  margin: auto;
 }
 
 img {
@@ -21,78 +27,70 @@ img {
 }
 
 /* animation */
-a:hover {
-    color: rgb(204, 213, 213);
-    text-align: center;
-      /* text-decoration: underline; */
-      font-family: monospace;
-      animation: colorRotate 3s linear 0s infinite;
-    }
-    
-    @keyframes colorRotate {
-      from {
-        color: #6666ff;
-      }
-      10% {
-        color: #0099ff;
-      }
-      75% {
-        color: #ff3399;
-      }
-      100% {
-        color: #6666ff;
-      }
-    }
-
-.flash p {
-    color: red;
-}
 
 .title {
-    color: rgb(204, 213, 213);
+    color: rgb(0, 0, 0);
     text-align: center;
-      /* text-decoration: underline; */
-      font-family: monospace;
-      animation: colorRotate 3s linear 0s infinite;
-    }
-    
-    @keyframes colorRotate {
-      from {
-        color: #6666ff;
-      }
-      10% {
-        color: #0099ff;
-      }
-      75% {
-        color: #ff3399;
-      }
-      100% {
-        color: #6666ff;
-      }
-}
+    font-family: monospace;
+    animation: colorRotate 3s linear 0s infinite;
+  }
 
-/* specifics */
+  @keyframes colorRotate {
+    from {
+      color: #6363f0;
+    }
+    10% {
+      color: #6e4de6;
+    }
+    75% {
+      color: #7a9ed5;
+    }
+    100% {
+      color: #6e4de6;
+    }
+  }
+
 
 .song-add {
     display: none;
 }
 
+.submit-button:hover {
+  background-color:#8cbab9;
+  text-align: center;
+  font-family: monospace;
+}
+
+
 .submit-button {
-    background-color:#23d6d3;
+  margin: auto;
+  background-color:#9bd3d2;
 	border-radius: 10px;
 	border: 1px solid #ffffff;
 	cursor: pointer;
 	color:#ffffff;
 	font-family: monospace;
-	font-size: 13px;
-	/* padding: 10px 50px; */
 	text-decoration: none;
-    /* margin: 5px; */
-    width: 500px
+  width: 500px
+}
+
+
+button {
+  background-color:rgb(236, 246, 255);
+	border-radius: 10px;
+	border: 1px solid #ffffff;
+	cursor: pointer;
+	color:#17125b;
+	font-family: monospace;
+	font-size: 20px;
+	padding: 10px 10px;
+	text-decoration: none;
+  margin: 5px;
+  width: 478px
 }
 
 input {
-    background-color:rgb(236, 246, 255);
+  background-color:rgb(236, 246, 255);
 	border-radius: 10px;
 	border: 1px solid #ffffff;
 	cursor: pointer;
@@ -101,7 +99,8 @@ input {
 	font-size: 13px;
 	padding: 10px 10px;
 	text-decoration: none;
-    margin: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
     width: 478px
 }
 
@@ -112,5 +111,17 @@ input {
 .user-wrapper h2 {
     margin: 0 auto;
     width: 400px;
-    padding-top: 40px;
+    padding-top: 20px;
 }
+
+.youtube-image {
+  padding-left: 3px;
+  height: 10px;
+  width: 15px;
+}
+
+.new-song-li {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
