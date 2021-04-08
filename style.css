@@ -35,6 +35,13 @@ img {
     animation: colorRotate 3s linear 0s infinite;
   }
 
+  .instructions {
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: monospace;
+  }
+
+
   @keyframes colorRotate {
     from {
       color: #6363f0;
@@ -67,7 +74,6 @@ img {
   background-color:#9bd3d2;
 	border-radius: 10px;
 	border: 1px solid #ffffff;
-	cursor: pointer;
 	color:#ffffff;
 	font-family: monospace;
 	text-decoration: none;
@@ -79,7 +85,6 @@ button {
   background-color:rgb(236, 246, 255);
 	border-radius: 10px;
 	border: 1px solid #ffffff;
-	cursor: pointer;
 	color:#17125b;
 	font-family: monospace;
 	font-size: 20px;
@@ -93,7 +98,6 @@ input {
   background-color:rgb(236, 246, 255);
 	border-radius: 10px;
 	border: 1px solid #ffffff;
-	cursor: pointer;
 	color:#17125b;
 	font-family: monospace;
 	font-size: 13px;

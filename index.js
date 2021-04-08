@@ -69,7 +69,7 @@ let totalUsers = []
 const searchForm = document.getElementById("song-search");
 const usernameForm = document.getElementById("username")
 const addSongButton = document.getElementById("song-add")
-const baseURL = "http://localhost:3000"
+const baseURL = "https://aqueous-beyond-33951.herokuapp.com"
 const ytFrame = document.getElementById('ytplayer')
 let currentUser;
 let currentUserObj;
@@ -133,6 +133,9 @@ class User {
            currentUserObj = totalUsers.find(u => u.name === currentUser.name);
            User.getUserById(currentUserObj.id)
         })
+        .catch(function() {
+            alert("Something went wrong. Reload and try again!")
+        })
 
     }
 
@@ -145,6 +148,9 @@ class User {
            console.log('individual user data', json)
            lastFmApi.displayUserSongs(json)
            return json
+        })
+        .catch(function() {
+            alert("Something went wrong. Reload and try again!")
         })
     }
 
@@ -166,6 +172,9 @@ class User {
               .then(function(data) {
                 currentUser = data
                 User.getUsers()
+            })
+            .catch(function() {
+                alert("Something went wrong. Reload and try again!")
             })
         }
 
@@ -212,6 +221,9 @@ class lastFmApi {
             let artist = json.similarartists.artist[randomNum].name
             lastFmApi.getArtistTopSongs(artist)
         })
+        .catch(function() {
+            alert("Something went wrong. Reload and try again!")
+        })
     }
 
     static getArtistTopSongs(artistName){
@@ -226,6 +238,9 @@ class lastFmApi {
             lastFmApi.displayResults(song)
             console.log(song)
             Youtube.getVideo(song.name, song.artist.name)
+        })
+        .catch(function() {
+            alert("Something went wrong. Reload and try again!")
         })
     }
 
@@ -274,6 +289,9 @@ class Youtube {
         .then(function(json) {
             console.log(json.items[0].id.videoId)
             Youtube.displayYoutubeLink(json.items[0].id.videoId)
+        })
+        .catch(function() {
+            alert("Something went wrong. Reload and try again!")
         })
     }
     
