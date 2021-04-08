@@ -166,7 +166,6 @@ class User {
               .then(function(data) {
                 currentUser = data
                 User.getUsers()
-                // User.currentUser()
             })
         }
 
