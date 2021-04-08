@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let newUser = User.createUser(inputName)
             usernameForm.style.display = "none"
 
+            if (ytFrame.style.display === "inline") {
+                addSongButton.style.display = "inline"
+            }
+
         }
     })
 
