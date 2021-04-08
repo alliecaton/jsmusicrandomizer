@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             songDiv.style.display = "inline"
             let newUser = User.createUser(inputName)
             usernameForm.style.display = "none"
-            User.getUsers()
+
         }
     })
 
@@ -111,10 +111,10 @@ class User {
         this.name = name
     }
 
-    static currentUser() {
-        currentUserObj = totalUsers.find(u => u.name === currentUser.name);
-        this.getUserById(currentUserObj.id)
-    }
+    // static currentUser() {
+    //     currentUserObj = totalUsers.find(u => u.name === currentUser.name);
+    //     this.getUserById(currentUserObj.id)
+    // }
     
     static getUsers() {
         return fetch(baseURL + '/users') 
@@ -123,6 +123,8 @@ class User {
         })
         .then(function(json) {
            totalUsers = json
+           currentUserObj = totalUsers.find(u => u.name === currentUser.name);
+           User.getUserById(currentUserObj.id)
         })
 
     }
@@ -156,7 +158,8 @@ class User {
             })
               .then(function(data) {
                 currentUser = data
-                User.currentUser()
+                User.getUsers()
+                // User.currentUser()
             })
         }
 
