@@ -104,7 +104,7 @@ input {
 }
 
 @media screen and (max-width: 600px) {
-  button, input {
+  input, iframe, .submit-button {
     width: 100%;
   }
 }
