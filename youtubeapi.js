@@ -3,7 +3,7 @@ class Youtube {
     static getVideo(title, artist) {
 
         let query = title.split(" ").join("+") + "+" + artist.split(" ").join("+")
-        return fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=1&q=${query}&key=AIzaSyAPiQa-MR679fruPabI0j7UmgkciB7wrg4`) 
+        return fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=1&q=${query}&key=AIzaSyBA2lNP5DdloL1uxR-Ix9fTNcgU-IPu5I8`) 
         .then(function(response) {
             return response.json();
         })
