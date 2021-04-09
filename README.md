@@ -2,7 +2,7 @@
 
 Music-R is a single-page vanilla Javascript application with a Rails API backend. In addition to the Rails API, Music-R makes use of the last.fm API and the Youtube API. You can view the backend repository [here](https://github.com/alliecaton/jsmusicrandomizer-backend)
 
-Music-R is available for use [here](http://plausible-nest.surge.sh/)
+Music-R is available for use [here](http://plausible-nest.surge.sh/).
 
 ## Usage
 
