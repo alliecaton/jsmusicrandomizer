@@ -17,9 +17,9 @@ class User {
         })
         .then(function(json) {
            totalUsers = json
-           currentUserObj = totalUsers.find(u => u.name === currentUser.name);
-           User.getUserById(currentUserObj.id)
-        //    return totalUsers
+        //    currentUserObj = totalUsers.find(u => u.name === currentUser.name);
+        //    User.getUserById(currentUser.name)
+           return totalUsers
         })
         // .catch(function() {
         //     alert("Something went wrong. Reload and try again!")
@@ -27,13 +27,14 @@ class User {
 
     }
 
-    static getUserById(id) {
-        return fetch(baseURL + "/users/" + `${id}`) 
+    static getUserByName(name) {
+        return fetch(baseURL + "/users/" + `${name}`) 
         .then(function(response) {
             return response.json();
         })
         .then(function(json) {
            console.log('individual user data', json)
+           currentUserObj = json
            lastFmApi.displayUserSongs(json)
            return json
         })
@@ -59,7 +60,9 @@ class User {
             })
               .then(function(data) {
                 currentUser = data
-                User.getUsers()
+                User.getUserByName(currentUser.name)
+
+                // User.getUsers()
             })
             .catch(function() {
                 alert("Something went wrong. Reload and try again!")
@@ -67,3 +70,5 @@ class User {
         }
 
 }
+
+
