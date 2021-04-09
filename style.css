@@ -78,34 +78,35 @@ img {
 	font-family: monospace;
 	text-decoration: none;
   width: 500px;
+  -webkit-appearance: none;
 }
 
 
-button {
+button, input {
   background-color:rgb(236, 246, 255);
-	border-radius: 10px;
-	border: 1px solid #ffffff;
-	color:#17125b;
-	font-family: monospace;
-	font-size: 20px;
-	padding: 10px 10px;
-	text-decoration: none;
-  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  color:#17125b;
+  font-family: monospace;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 478px
 }
 
+button {
+  font-size: 20px;
+}
+
 input {
-  background-color:rgb(236, 246, 255);
-	border-radius: 10px;
-	border: 1px solid #ffffff;
-	color:#17125b;
-	font-family: monospace;
-	font-size: 13px;
-	padding: 10px 10px;
-	text-decoration: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
-    width: 478px
+  font-size: 13px;
+}
+
+@media screen and (max-width: 600px) {
+  button, input {
+    width: 100%;
+  }
 }
 
 .user-wrapper {
