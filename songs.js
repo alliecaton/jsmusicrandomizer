@@ -15,10 +15,10 @@ class Song {
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                title: `${newSong.title}`,
-                artist: `${newSong.artist}`,
+                title: newSong.title,
+                artist: newSong.artist,
                 user_id: currentUserObj.id,
-                url: `${newSong.url}`
+                url: newSong.url
             })
         })
         .then(function(response) {

@@ -17,18 +17,13 @@ class User {
         })
         .then(function(json) {
            totalUsers = json
-        //    currentUserObj = totalUsers.find(u => u.name === currentUser.name);
-        //    User.getUserById(currentUser.name)
            return totalUsers
         })
-        // .catch(function() {
-        //     alert("Something went wrong. Reload and try again!")
-        // })
 
     }
 
     static getUserByName(name) {
-        return fetch(baseURL + "/users/" + `${name}`) 
+        return fetch(baseURL + "/users/" + name) 
         .then(function(response) {
             return response.json();
         })
@@ -61,8 +56,6 @@ class User {
               .then(function(data) {
                 currentUser = data
                 User.getUserByName(currentUser.name)
-
-                // User.getUsers()
             })
             .catch(function() {
                 alert("Something went wrong. Reload and try again!")
