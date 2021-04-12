@@ -3,6 +3,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     addSongButton.style.display = "none"
     ytFrame.style.display = "none"
+    // const searchForm = document.getElementById("song-search");
+    const usernameForm = document.getElementById("username")
+    const searchFormButton = document.getElementById('search-button')
     searchFormButton.addEventListener("click", (e)=> {
         e.preventDefault()
         const ul = document.getElementById('song-list')
@@ -65,15 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
 })
 
-let totalUsers = []
-const searchForm = document.getElementById("song-search");
-const usernameForm = document.getElementById("username")
 const addSongButton = document.getElementById("song-add")
 const baseURL = "https://aqueous-beyond-33951.herokuapp.com"
 const ytFrame = document.getElementById('ytplayer')
 let currentUser;
 let currentUserObj;
-const searchFormButton = document.getElementById('search-button')
 
 // LAST FM API //
 class lastFmApi {
@@ -241,19 +240,13 @@ class User {
         this.name = name
     }
 
-    // static currentUser() {
-    //     currentUserObj = totalUsers.find(u => u.name === currentUser.name);
-    //     this.getUserById(currentUserObj.id)
-    // }
-    
     static getUsers() {
         return fetch(baseURL + '/users') 
         .then(function(response) {
             return response.json();
         })
         .then(function(json) {
-           totalUsers = json
-           return totalUsers
+            return json
         })
 
     }
